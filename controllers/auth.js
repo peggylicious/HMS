@@ -46,11 +46,13 @@ module.exports.login = (req, res, next) => {
   }
 
   module.exports.signup = (req, res, next) => {
+    console.log(req.body.email)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      console.log(errors.array())
+      return res.status(400).json(errors.array());
     }
-    console.log(req.body);
+    // console.log(req.body);
 
     //   AuthUser.findOne
     AuthUser.findOne({ email: req.body.email }).then((userfound) => {
