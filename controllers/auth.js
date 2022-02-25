@@ -69,6 +69,10 @@ module.exports.login = (req, res, next) => {
         return res.status(401).json({ message: "User already exists" });
       }
       bcrypt.hash(req.body.password, 10, function (err, hash) {
+        // Check for password equality
+        if(req.body.password !== req.body.confirmPassword){
+          return res.status(401).json([{ msg: "password do not match", param: "password" }])
+        }
         // Frontend should verify that both passwords are same b4 sending to Backend
         const user = new AuthUser({
           id: mongoose.Types.ObjectId,
@@ -83,7 +87,7 @@ module.exports.login = (req, res, next) => {
           .save()
           .then((newUser) => {
             console.log("newUser ", newUser);
-            res.status(200).json({ message: "User created" });
+            res.status(200).json({ message: "User created", data: newUser });
           })
           .catch((err) => {
             res.status(500).json({ err });
