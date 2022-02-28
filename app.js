@@ -32,11 +32,12 @@ app.use("/user", authRoutes)
 
 // error handler middleware
 app.use((error, req, res, next) => {
+  console.log(error)
     res.status(error.status || 500).json({
-      error: {
+      // error: {
         status: error.status || 500,
         message: error.message || 'Internal Server Error',
-      },
+      // },
     });
   });
 
