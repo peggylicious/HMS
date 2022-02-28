@@ -21,6 +21,6 @@ router.post(
   authController.signup
 );
 
-router.post("/login", authController.login);
+router.post("/login", [check('email', "Enter a valid email address").isEmail()], authController.login);
 
 module.exports = router;

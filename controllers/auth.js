@@ -14,8 +14,18 @@ module.exports.login = (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   });
+  // if(req.body.email === ""){
+  //   return res.status(401).json({ message: "Enter a valid email address" });
+  // }
+  // checkErrors(req, res)
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(400).json(errors.array());
+  }
   AuthUser.findOne({ email: req.body.email }).then((userExists) => {
     console.log("User is ", userExists);
+    // checkErrors(req)
 
     if (userExists === null) {
       // let ab = new Error("User already exists")
@@ -49,13 +59,11 @@ module.exports.login = (req, res, next) => {
           "shhhhh"
         );
         console.log("Token ", token);
-        return res
-          .status(200)
-          .json({
-            message: "Auth successful",
-            token: token,
-            loggedUserId: foundUser._id,
-          });
+        return res.status(200).json({
+          message: "Auth successful",
+          token: token,
+          loggedUserId: foundUser._id,
+        });
       })
       .catch((err) => {
         next(err);
@@ -70,6 +78,8 @@ module.exports.signup = (req, res, next) => {
     console.log(errors.array());
     return res.status(400).json(errors.array());
   }
+  // console.log(checkErrors(req))
+  // checkErrors(req)
   // console.log(req.body);
 
   //   AuthUser.findOne
@@ -116,3 +126,11 @@ module.exports.signup = (req, res, next) => {
     });
   });
 };
+
+// function checkErrors(bodyReq, bodyRes){
+//   const errors = validationResult(bodyReq);
+//   if (!errors.isEmpty()) {
+//     console.log(errors.array());
+//     return bodyRes.status(400).json(errors.array());
+//   }
+// }
