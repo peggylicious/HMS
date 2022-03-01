@@ -25,7 +25,6 @@ module.exports.login = (req, res, next) => {
   }
   AuthUser.findOne({ email: req.body.email }).then((userExists) => {
     console.log("User is ", userExists);
-    // checkErrors(req)
 
     if (userExists === null) {
       // let ab = new Error("User already exists")
