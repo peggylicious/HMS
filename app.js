@@ -28,7 +28,9 @@ app.use(bodyParser.json());
 // });
 app.use(cors())
 
-app.use("/user", authRoutes)
+// app.use("/user", authRoutes)
+app.use("/user/:role/", authRoutes)
+
 
 // error handler middleware
 app.use((error, req, res, next) => {

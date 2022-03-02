@@ -5,8 +5,10 @@ var jwt = require("jsonwebtoken");
 
 const { body, validationResult } = require("express-validator");
 
-const AuthUser = require("../models/auth");
+let AuthUser = require("../models/auth");
 
+// let {patients, doctors} = require("../models/auth");
+// let AuthUser;
 module.exports.login = (req, res, next) => {
   // Look for user with email
   let foundUser;
@@ -71,17 +73,24 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.signup = (req, res, next) => {
-  console.log(req.body.email);
+  console.log(req.params.role);
+  if((req.params.role !== "doctor") && (req.params.role != "patient")){
+    return res.status(404).json({
+      message:
+        "You are not allowed to register",
+    });
+  }
+  if (req.params.role === "doctor"){
+    AuthUser = AuthUser.doctors
+  }
+  if (req.params.role === "patient"){
+    AuthUser = AuthUser.patients
+  }
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(400).json(errors.array());
   }
-  // console.log(checkErrors(req))
-  // checkErrors(req)
-  // console.log(req.body);
-
-  //   AuthUser.findOne
   AuthUser.findOne({ email: req.body.email }).then((userfound) => {
     console.log("My user ", userfound);
     if (req.body.email === undefined) {
@@ -91,18 +100,17 @@ module.exports.signup = (req, res, next) => {
           "No data was submitted. Make sure you are using the correct headers / content-type",
       });
     }
-    if (userfound !== null) {
+    if (userfound !== null) { // If email exists
       console.log("Null of ", userfound);
       return res.status(401).json({ message: "User already exists" });
     }
-    bcrypt.hash(req.body.password, 10, function (err, hash) {
-      // Check for password equality
-      if (req.body.password !== req.body.confirmPassword) {
+    bcrypt.hash(req.body.password, 10, function (err, hash) { // Encrypt password
+      if (req.body.password !== req.body.confirmPassword) { // Check for password equality
         return res
           .status(401)
           .json([{ msg: "password do not match", param: "password" }]);
       }
-      // Frontend should verify that both passwords are same b4 sending to Backend
+      // Frontend should also verify that both passwords are same b4 sending to Backend
       const user = new AuthUser({
         id: mongoose.Types.ObjectId,
         firstname: req.body.firstName,
@@ -110,6 +118,7 @@ module.exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
         confirmPassword: hash,
+        role: req.params.role
       });
       // Store hash in your password DB.
       console.log(userfound, "else");
@@ -126,10 +135,3 @@ module.exports.signup = (req, res, next) => {
   });
 };
 
-// function checkErrors(bodyReq, bodyRes){
-//   const errors = validationResult(bodyReq);
-//   if (!errors.isEmpty()) {
-//     console.log(errors.array());
-//     return bodyRes.status(400).json(errors.array());
-//   }
-// }

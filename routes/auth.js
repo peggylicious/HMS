@@ -9,7 +9,7 @@ const AuthUser = require("../models/auth");
 const myValidator = require("../middleware/validator");
 const authController = require("../controllers/auth");
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.post(
   "/signup", 
