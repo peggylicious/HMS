@@ -113,8 +113,8 @@ module.exports.signup = (req, res, next) => {
       // Frontend should also verify that both passwords are same b4 sending to Backend
       const user = new AuthUser({
         id: mongoose.Types.ObjectId,
-        firstname: req.body.firstName,
-        lastname: req.body.lastName,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
         password: hash,
         confirmPassword: hash,

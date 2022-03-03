@@ -11,4 +11,6 @@ const authController = require("../controllers/auth");
 const allDoctors = require("../controllers/doctors")
 const router = express.Router({mergeParams: true});
 router.get('/', allDoctors.getAllDoctors )
+router.get('/doctor', allDoctors.getDoctor )
+
 module.exports = router;
