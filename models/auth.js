@@ -15,7 +15,7 @@ const { Schema } = mongoose;
     email: String,
     password: String, 
     confirmPassword: String,
-    role: String
+    role: String,
   });
 
   const authDoctorSchema = mongoose.Schema({
@@ -24,7 +24,7 @@ const { Schema } = mongoose;
     email: String,
     password: String, 
     confirmPassword: String,
-    role: String
+    role: String,
   });
 
   module.exports.doctors = mongoose.model('doctors', authDoctorSchema)
