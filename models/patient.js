@@ -11,7 +11,6 @@ const { Schema } = mongoose;
     diagnosis: Boolean,
     description: String,
     preferredDoctor: {type: String, ref: "doctors"}
-
   });
 
   
