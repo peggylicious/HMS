@@ -12,5 +12,6 @@ const allDoctors = require("../controllers/doctors")
 const router = express.Router({mergeParams: true});
 router.get('/all', allDoctors.getAllDoctors )
 router.get('/doctor', allDoctors.getDoctor )
+router.get('/appointment-request', allDoctors.getAppointment )
 
 module.exports = router;
