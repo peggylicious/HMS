@@ -10,7 +10,7 @@ const { Schema } = mongoose;
     requestedBy: {type: Schema.Types.ObjectId, ref: 'patients'}, 
     diagnosis: Boolean,
     description: String,
-    preferedDoctor: String
+    preferredDoctor: {type: Schema.Types.ObjectId, ref: "doctors"}
 
   });
 
@@ -19,4 +19,4 @@ const { Schema } = mongoose;
 
   
   // module.exports = mongoose.model('User', authSchema)
-  module.exports = mongoose.model('appointment', patientAppointmentSchema)
+  module.exports = mongoose.model('patientAppointment', patientAppointmentSchema)

@@ -14,6 +14,6 @@ const router = express.Router({mergeParams: true});
 
 // Routes
 router.post('/book-appointment', appointments.bookPatientAppointment )
-router.get('/appointment', appointments.getAppointment)
+router.get('/appointment/:id', appointments.getAppointment)
 
 module.exports = router;

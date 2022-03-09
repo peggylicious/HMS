@@ -13,8 +13,9 @@ module.exports.bookPatientAppointment = (req, res, next) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     date: req.body.date,
-    requestedBy: "62263f7ae11586424906fe30",
-    preferedDoctor: "6220cdc90a547b978e7b0da3",
+    time: req.body.time,
+    requestedBy: req.body.requestedBy,
+    preferredDoctor: req.body.preferredDoctor,
   });
 
   bookAppointment
@@ -29,8 +30,9 @@ module.exports.bookPatientAppointment = (req, res, next) => {
 
 module.exports.getAppointment = (req, res, next) => {
   patientAppointment
-    .findOne({ _id: "622649b92c3474f20e1685ef" })
+    .findOne({ _id: req.params.id })
     .populate("requestedBy", "firstname")
+    .populate("preferredDoctor", "firstname")
     .then((result) => {
       res.status(200).json({ result });
     })
