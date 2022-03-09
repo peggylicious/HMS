@@ -12,7 +12,6 @@ module.exports.getAllDoctors = (req, res, next) => {
     .find({ role: "doctor" })
     .select("_id email role")
     .then((doctors) => {
-      console.log(doctors);
       res.status(200).json({ doctors });
     })
     .catch((err) => {
@@ -20,13 +19,11 @@ module.exports.getAllDoctors = (req, res, next) => {
     });
 };
 module.exports.getDoctor = (req, res, next) => {
-  console.log("First name ", req.query.firstname)
 
   AuthUser.doctors
-    .find({ firstname: { $regex: req.query.firstname, $options: "i" } })
+    .find({ firstname: { $regex: req.query.firstname, $options: "i" } }) // e.g. http://localhost:3000/doctors/doctor/?firstname=do
     .select("_id firstname role")
     .then((doctors) => {
-      console.log(doctors);
       res.status(200).json({ doctors });
     })
     .catch((err) => {
