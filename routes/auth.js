@@ -14,7 +14,7 @@ const router = express.Router({mergeParams: true});
 
 router.post(
   "/signup", 
-    [check('email', "Email address is not valid").isEmail(), check('password', "Your password is too short. Should be atleast 5 characters").isLength({min: 5}), check('firstname', "Enter a valid first name").notEmpty(), check('lastname', "Enter a valid last name").notEmpty()],
+    [check('email', "Email address is not valid").isEmail(), check('password', "Your password is too short. Should be atleast 4 characters").isLength({min: 4}), check('firstname', "Enter a valid first name").notEmpty(), check('lastname', "Enter a valid last name").notEmpty()],
     // password must be at least 5 chars long
     // body("password").isLength({ min: 3 }),
     // body("confirmPassword").isLength({ min: 3 }),
