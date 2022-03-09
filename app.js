@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const bodyParser= require("body-parser");
 var cors = require('cors')
 const authRoutes = require('./routes/auth');
-const allRoutes = require('./routes/all');
+const doctorRoutes = require('./routes/doctor');
+const patientRoutes = require('./routes/patient');
 
 // const router = express.Router()
 
@@ -31,8 +32,8 @@ app.use(cors())
 
 // app.use("/user", authRoutes)
 app.use("/user/:role/", authRoutes)
-app.use('/doctors', allRoutes)
-
+app.use('/doctors', doctorRoutes)
+app.use('/patient', patientRoutes)
 // error handler middleware
 app.use((error, req, res, next) => {
   console.log(error)
