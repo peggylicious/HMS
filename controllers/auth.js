@@ -10,6 +10,13 @@ let AuthUser = require("../models/auth");
 // let {patients, doctors} = require("../models/auth");
 // let AuthUser;
 module.exports.login = (req, res, next) => {
+  console.log(req.params.role )
+  if (req.params.role === "doctor"){
+    AuthUser = AuthUser.doctors
+  }
+  if (req.params.role === "patient"){
+    AuthUser = AuthUser.patients
+  }
   // Look for user with email
   let foundUser;
   const user = new AuthUser({
