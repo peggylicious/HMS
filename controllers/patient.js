@@ -40,3 +40,14 @@ module.exports.getAppointment = (req, res, next) => {
       res.status(500).json({ err });
     });
 };
+
+module.exports.getAllPatientAppointment = (req, res, next) => {
+  patientAppointment
+    .find({ requestedBy: req.userId })
+    .then((appointments) => {
+      res.status(200).json({ appointments });
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+    });
+};
