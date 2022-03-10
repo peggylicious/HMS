@@ -24,9 +24,9 @@ module.exports = (req, res, next) => {
   let decoded;
   try {
     decoded = jwt.verify(token, "shhhhh");
-    console.log(decoded);
+    // console.log(decoded);
   } catch (error) {
-    console.log(decoded);
+    // console.log(decoded);
 
     error.statusCode = 401;
     error.status = 401;
@@ -41,5 +41,6 @@ module.exports = (req, res, next) => {
     err.stack = 401;
     throw err;
   }
+  req.userId = decoded.tid
   next();
 };
