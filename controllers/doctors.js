@@ -23,7 +23,7 @@ module.exports.getDoctor = (req, res, next) => {
 
   AuthUser.doctors
     .find({ firstname: { $regex: req.query.firstname, $options: "i" } }) // e.g. http://localhost:3000/doctors/doctor/?firstname=do
-    .select("_id firstname role")
+    .select("_id firstname lastname email role")
     .then((doctors) => {
       res.status(200).json({ doctors });
     })

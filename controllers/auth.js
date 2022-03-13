@@ -11,15 +11,16 @@ let AuthUser = require("../models/auth");
 // let AuthUser;
 module.exports.login = (req, res, next) => {
   console.log(req.params.role )
+  let registeredUser;
   if (req.params.role === "doctor"){
-    AuthUser = AuthUser.doctors
+    registeredUser = AuthUser.doctors
   }
   if (req.params.role === "patient"){
-    AuthUser = AuthUser.patients
+    registeredUser = AuthUser.patients
   }
   // Look for user with email
   let foundUser;
-  const user = new AuthUser({
+  const user = new registeredUser({
     email: req.body.email,
     password: req.body.password,
   });
@@ -32,7 +33,7 @@ module.exports.login = (req, res, next) => {
     console.log(errors.array());
     return res.status(400).json(errors.array());
   }
-  AuthUser.findOne({ email: req.body.email }).then((userExists) => {
+  registeredUser.findOne({ email: req.body.email }).then((userExists) => {
     console.log("User is ", userExists);
 
     if (userExists === null) {

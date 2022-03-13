@@ -30,7 +30,7 @@ module.exports.bookPatientAppointment = (req, res, next) => {
 
 module.exports.getAppointment = (req, res, next) => {
   patientAppointment
-    .findOne({ _id: req.params.id })
+    .findOne({ _id: req.params.id }) //Id of the appointment
     .populate("requestedBy", "firstname")
     .populate("preferredDoctor", "firstname")
     .then((result) => {
