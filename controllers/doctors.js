@@ -7,6 +7,7 @@ const { body, validationResult } = require("express-validator");
 
 let AuthUser = require("../models/auth");
 const patientAppointment = require("../models/patient");
+let DoctorAppointment = require("../models/doctorAppointments");
 
 module.exports.getAllDoctors = (req, res, next) => {
   AuthUser.doctors
@@ -36,5 +37,28 @@ module.exports.getAppointment = (req, res, next) => {
     res.status(200).json(appointments);
   }).catch(err => {
     res.status(500).json(err);
+  })
+}
+
+module.exports.createDoctorAppointment = (req, res, next) => {
+  let appointment = new DoctorAppointment({
+      id: mongoose.Types.ObjectId,
+      date: req.body.date,
+      time: req.body.time,
+      doctor_id: req.body.doctor_id
+  })
+  appointment.save().then(appointment => {
+      res.status(200).json(appointment)
+  }).catch(err => {
+      res.status(500).json(err)
+  })
+}
+
+module.exports.getAppointment = (req, res, next) => {
+    DoctorAppointment.find({doctor_id: req.params.doctor_id}).then(appointment => {
+      res.status(200).json(appointment)
+
+    }).catch(err => {
+      res.status(500).json(err)
   })
 }
