@@ -11,7 +11,7 @@ const patientAppointment = require("../models/patient");
 module.exports.getAllDoctors = (req, res, next) => {
   AuthUser.doctors
     .find({ role: "doctor" })
-    .select("_id email role")
+    .select("_id firstname lastname email role")
     .then((doctors) => {
       res.status(200).json({ doctors });
     })
