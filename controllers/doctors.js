@@ -54,9 +54,15 @@ module.exports.createDoctorAppointment = (req, res, next) => {
   })
 }
 
-module.exports.getAppointment = (req, res, next) => {
+module.exports.getAppointment = (req, res, next) => { // Use query parameters month and year
+  console.log(req.query)
     DoctorAppointment.find({doctor_id: req.params.doctor_id}).then(appointment => {
-      res.status(200).json(appointment)
+      let c = appointment.filter(item => {
+        let a = item.date.split("-")
+        return a[1] === req.query.month && a[2] === req.query.year
+      })
+      console.log(c)
+      res.status(200).json(c)
 
     }).catch(err => {
       res.status(500).json(err)
