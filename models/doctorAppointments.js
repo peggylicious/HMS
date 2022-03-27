@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const doctorAppointmentSchema = mongoose.Schema({
     date: String,
-    time: String, 
+    time: {type: Array}, 
     doctor_id: {type: String, ref: "doctors"}
     // appointments: Array,
     // requestedBy: {type: Schema.Types.ObjectId, ref: 'patients'}, 
