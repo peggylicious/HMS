@@ -10,7 +10,8 @@ const { Schema } = mongoose;
     requestedBy: {type: Schema.Types.ObjectId, ref: 'patients'}, 
     diagnosis: Boolean,
     description: String,
-    preferredDoctor: {type: String, ref: "doctors"}
+    preferredDoctor: {type: String, ref: "doctors"}, 
+    status: String // Confirmed/Acepted - Pending/Hold - Declined/Rejected
   });
 
   
