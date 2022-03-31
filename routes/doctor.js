@@ -12,7 +12,7 @@ const allDoctors = require("../controllers/doctors")
 const router = express.Router({mergeParams: true});
 router.get('/all', allDoctors.getAllDoctors )
 router.get('/doctor', allDoctors.getDoctor )
-router.get('/appointment-request', allDoctors.getAppointment )
+router.get('/appointment-request', allDoctors.getRequestedAppointment )
 router.post('/appointment', allDoctors.createDoctorAppointment)
 router.put('/update-time', allDoctors.addAppointmentTime)
 router.get("/my-appointment/:doctor_id", allDoctors.getAppointment)

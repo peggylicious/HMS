@@ -31,7 +31,7 @@ module.exports.getDoctor = (req, res, next) => {
       res.status(401).json({ err });
     });
 };
-module.exports.getAppointment = (req, res, next) => {
+module.exports.getRequestedAppointment = (req, res, next) => {
   patientAppointment
     .find({ preferredDoctor: "6228e34518a9493675846410" })
     .populate("preferredDoctor", "firstname email")
