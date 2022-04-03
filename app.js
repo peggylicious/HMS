@@ -6,11 +6,12 @@ var cors = require('cors')
 const authRoutes = require('./routes/auth');
 const doctorRoutes = require('./routes/doctor');
 const patientRoutes = require('./routes/patient');
-
+const dotenv = require('dotenv');
+dotenv.config();
 // const router = express.Router()
 
 // Connect to DB
-mongoose.connect('mongodb+srv://margaret:' + 'margaret' + '@cluster0.lxpah.mongodb.net/hms?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://margaret:' + process.env.PASSWORD + '@cluster0.lxpah.mongodb.net/hms?retryWrites=true&w=majority', {
     // useMongoClient: true
     // useCreateIndex: true,
     useNewUrlParser: true, 
