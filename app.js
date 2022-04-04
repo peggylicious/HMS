@@ -12,7 +12,7 @@ dotenv.config();
 
 // Connect to DB
 // mongoose.connect('mongodb+srv://margaret:' + 'margaret' + '@cluster0.lxpah.mongodb.net/hms?retryWrites=true&w=majority', {
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(`${process.env.MONGODB_URI}`, {
     // useMongoClient: true
     // useCreateIndex: true,
     useNewUrlParser: true, 
