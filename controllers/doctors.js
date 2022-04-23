@@ -53,7 +53,7 @@ module.exports.createDoctorAppointment = (req, res, next) => {
   DoctorAppointment.findOne({ doctor_id: req.body.doctor_id, date: req.body.date }).then(result => {
     console.log(result)
     if(result?.date === req.body.date ){
-      return res.status(401).json({message: "Date already exists"});
+      return res.status(401).json({message: "Date already exists", result});
     }
     appointment
     .save()

@@ -5,18 +5,17 @@ var jwt = require("jsonwebtoken");
 
 const { body, validationResult } = require("express-validator");
 
-let AuthUser = require("../models/auth");
+let {patients, doctors} = require("../models/auth");
 
-// let {patients, doctors} = require("../models/auth");
-// let AuthUser;
+let AuthUser;
 module.exports.login = (req, res, next) => {
   console.log(req.params.role )
   let registeredUser;
   if (req.params.role === "doctor"){
-    registeredUser = AuthUser.doctors
+    registeredUser = doctors
   }
   if (req.params.role === "patient"){
-    registeredUser = AuthUser.patients
+    registeredUser = patients
   }
   // Look for user with email
   let foundUser;
@@ -89,10 +88,10 @@ module.exports.signup = (req, res, next) => {
     });
   }
   if (req.params.role === "doctor"){
-    AuthUser = AuthUser.doctors
+    AuthUser = doctors
   }
   if (req.params.role === "patient"){
-    AuthUser = AuthUser.patients
+    AuthUser = patients
   }
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -101,7 +100,7 @@ module.exports.signup = (req, res, next) => {
   }
   AuthUser.findOne({ email: req.body.email }).then((userfound) => {
     console.log("My user ", userfound);
-    if (req.body.email === undefined) {
+    if (req.body.email === 'undefined') {
       console.log(req);
       return res.status(500).json({
         message:
@@ -119,7 +118,7 @@ module.exports.signup = (req, res, next) => {
           .json([{ msg: "password do not match", param: "password" }]);
       }
       // Frontend should also verify that both passwords are same b4 sending to Backend
-      const user = new AuthUser({
+      const user = new patients({
         id: new mongoose.Types.ObjectId(),
         firstname: req.body.firstname,
         lastname: req.body.lastname,
