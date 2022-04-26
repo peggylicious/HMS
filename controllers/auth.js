@@ -9,6 +9,7 @@ let {patients, doctors} = require("../models/auth");
 
 let AuthUser;
 module.exports.login = (req, res, next) => {
+  console.log(req.headers)
   console.log(req.params.role )
   let registeredUser;
   if (req.params.role === "doctor"){

@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
   //   console.log(jwt.verify(token, "sh"))
   let decoded;
   try {
-    decoded = jwt.verify(token, "shhhhh");
+    decoded = jwt.verify(token, process.env.HASH);
     // console.log(decoded);
   } catch (error) {
     // console.log(decoded);
