@@ -26,8 +26,17 @@ const { Schema } = mongoose;
     confirmPassword: String,
     role: String,
   });
+  const userSchema = mongoose.Schema({
+    firstname:  String, // String is shorthand for {type: String}
+    lastname: String,
+    email: String,
+    password: String, 
+    confirmPassword: String,
+    role: String,
+  });
 
   module.exports.doctors = mongoose.model('doctors', authDoctorSchema)
   
   // module.exports = mongoose.model('User', authSchema)
   module.exports.patients = mongoose.model('patients', authPatientSchema)
+  module.exports.patients = mongoose.model('user', userSchema)
