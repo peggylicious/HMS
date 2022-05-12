@@ -35,7 +35,7 @@ app.get("/", function(req, res) {
   //when we get an http get request to the root/homepage
   res.send("Hello World!!!");
 });
-// app.use("/user", authRoutes)
+app.use("/user", authRoutes)
 app.use("/user/:role/", authRoutes)
 app.use('/doctors', doctorRoutes)
 app.use('/patient', patientRoutes)

@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 
 const { body, validationResult } = require("express-validator");
 
-let {patients, doctors} = require("../models/auth");
+let {patients, doctors, user} = require("../models/auth");
 
 let AuthUser;
 module.exports.login = (req, res, next) => {
@@ -65,7 +65,8 @@ module.exports.login = (req, res, next) => {
         }
         var token = jwt.sign(
           { email: req.body.email, tid: foundUser._id },
-          process.env.HASH
+          process.env.HASH, 
+          { expiresIn: '240s' }
         );
         console.log("Token ", token);
         return res.status(200).json({
@@ -82,24 +83,25 @@ module.exports.login = (req, res, next) => {
 
 module.exports.signup = (req, res, next) => {
   console.log(req.params.role);
-  if((req.params.role !== "doctor") && (req.params.role != "patient")){
-    return res.status(404).json({
-      message:
-        "You are not allowed to register",
-    });
-  }
-  if (req.params.role === "doctor"){
-    AuthUser = doctors
-  }
-  if (req.params.role === "patient"){
-    AuthUser = patients
-  }
+  // if((req.params.role !== "doctor") && (req.params.role != "patient")){
+  //   return res.status(404).json({
+  //     message:
+  //       "You are not allowed to register",
+  //   });
+  // }
+  // if (req.params.role === "doctor"){
+  //   AuthUser = doctors
+  // }
+  // if (req.params.role === "patient"){
+  //   AuthUser = patients
+  // }
+  // AuthUser = user
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(400).json(errors.array());
   }
-  AuthUser.findOne({ email: req.body.email }).then((userfound) => {
+  user.findOne({ email: req.body.email }).then((userfound) => {
     console.log("My user ", userfound);
     if (req.body.email === 'undefined') {
       console.log(req);
@@ -119,7 +121,7 @@ module.exports.signup = (req, res, next) => {
           .json([{ msg: "password do not match", param: "password" }]);
       }
       // Frontend should also verify that both passwords are same b4 sending to Backend
-      const user = new patients({
+      const newUser = new user({
         id: new mongoose.Types.ObjectId(),
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -130,11 +132,11 @@ module.exports.signup = (req, res, next) => {
       });
       // Store hash in your password DB.
       console.log(userfound, "else");
-      return user
+      return newUser
         .save()
-        .then((newUser) => {
-          console.log("newUser ", newUser);
-          res.status(200).json({ message: "User created", data: newUser });
+        .then((result) => {
+          console.log("new User ", result);
+          res.status(200).json({ message: "User created", data: result });
         })
         .catch((err) => {
           res.status(500).json({ err });

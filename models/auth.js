@@ -39,4 +39,4 @@ const { Schema } = mongoose;
   
   // module.exports = mongoose.model('User', authSchema)
   module.exports.patients = mongoose.model('patients', authPatientSchema)
-  module.exports.patients = mongoose.model('user', userSchema)
+  module.exports.user = mongoose.model('user', userSchema)
