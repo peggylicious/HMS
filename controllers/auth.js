@@ -66,7 +66,7 @@ module.exports.login = (req, res, next) => {
         var token = jwt.sign(
           { email: req.body.email, tid: foundUser._id },
           process.env.HASH, 
-          { expiresIn: '240s' }
+          // { expiresIn: '240s' }
         );
         console.log("Token ", token);
         return res.status(200).json({
