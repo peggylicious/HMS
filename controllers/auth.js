@@ -11,16 +11,16 @@ let AuthUser;
 module.exports.login = (req, res, next) => {
   console.log(req.headers)
   console.log(req.params.role )
-  let registeredUser;
-  if (req.params.role === "doctor"){
-    registeredUser = doctors
-  }
-  if (req.params.role === "patient"){
-    registeredUser = patients
-  }
+  // let registeredUser;
+  // if (req.params.role === "doctor"){
+  //   registeredUser = doctors
+  // }
+  // if (req.params.role === "patient"){
+  //   registeredUser = patients
+  // }
   // Look for user with email
   let foundUser;
-  const user = new registeredUser({
+  const registeredUser = new user({
     email: req.body.email,
     password: req.body.password,
   });
@@ -33,7 +33,7 @@ module.exports.login = (req, res, next) => {
     console.log(errors.array());
     return res.status(400).json(errors.array());
   }
-  registeredUser.findOne({ email: req.body.email }).then((userExists) => {
+  user.findOne({ email: req.body.email }).then((userExists) => {
     console.log("User is ", userExists);
 
     if (userExists === null) {
